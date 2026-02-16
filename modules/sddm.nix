@@ -1,0 +1,22 @@
+{ inputs, ... }: {
+  imports = [ inputs.silentSDDM.nixosModules.default ];
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true; 
+  };
+
+  programs.silentSDDM = {
+    enable = true;
+    theme = "rei";
+    profileIcons = {
+      kjetteren = ../users/kjetteren/icon.png;
+    };
+    settings = {
+      "General" = {
+        DisplayServer = "wayland";
+        GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
+      };
+    };
+  };
+}
