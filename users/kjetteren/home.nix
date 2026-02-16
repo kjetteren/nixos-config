@@ -1,5 +1,5 @@
-{ pkgs, inputs, ... }: {
-  imports = [ ./shell.nix inputs.lazyvim.homeManagerModules.default ];
+{ pkgs, inputs, lib, ... }: {
+  imports = [ ./shell.nix inputs.lazyvim.homeManagerModules.default inputs.plasma-manager.homeModules.plasma-manager ];
 
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
@@ -37,6 +37,7 @@
     logmein-hamachi
     haguichi
     wl-clipboard
+    papirus-icon-theme
   ];
 
   programs.lazyvim = {
@@ -55,6 +56,83 @@
   };
   
   fonts.fontconfig.enable = true;
+
+  programs.plasma = {
+    enable = true;
+
+    session.sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
+
+    configFile."kdeglobals"."Icons"."Theme" = "Papirus";
+    configFile."kdeglobals"."KDE" = {
+      AutomaticDarkLightLookAndFeel = true;
+      AutomaticLookAndFeel = true; 
+      DefaultLightLookAndFeel = "org.kde.breeze.desktop";
+      DefaultDarkLookAndFeel = "org.kde.breezedark.desktop";
+    };
+
+    kwin.nightLight = {
+      enable = true;
+      mode = "location";
+      location = {
+        latitude = "50.88";
+        longitude = "4.70";
+      };
+    };
+
+    kscreenlocker = {
+      timeout = 30;
+      passwordRequiredDelay = 30;
+    };
+
+    workspace = {
+      wallpaper = ./wallpapers/Nix;
+      iconTheme = null;
+    };
+
+    panels = [
+      {
+        floating = true;
+        screen = "all";
+        widgets = [
+          {
+            name = "org.kde.plasma.kickoff";
+            config = {
+              General = {
+                icon = "nix-snowflake"; 
+              };
+            };
+          }
+          "org.kde.plasma.pager"
+          {
+            name = "org.kde.plasma.icontasks";
+            config = {
+              General.launchers = [
+                "applications:systemsettings.desktop"
+                "applications:org.kde.dolphin.desktop"
+                "applications:Alacritty.desktop"
+                "applications:brave-browser.desktop"
+                "applications:discord.desktop"
+                "applications:org.telegram.desktop.desktop"
+                "applications:TeamSpeak.desktop"
+              ];
+            };
+          }
+          "org.kde.plasma.marginsseparator"
+          "org.kde.plasma.systemtray"
+          "org.kde.plasma.digitalclock"
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+    ];
+
+    shortcuts = {
+      "services/Alacritty.desktop"."_launch" = "Ctrl+Alt+T";
+      "services/org.kde.konsole.desktop"."_launch"="None";
+    };
+  };
+
+  home.file.".local/share/icons/breeze".source = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Light";
+  home.file.".local/share/icons/breeze-dark".source = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark";
 
   programs.ssh = {
     enable = true;
