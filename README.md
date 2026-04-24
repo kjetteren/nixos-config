@@ -1,17 +1,18 @@
 # nixos-config
 
-A modular, Flake-powered NixOS configuration featuring Secure Boot (Lanzaboote), CachyOS kernels, and 1Password integration.
+A modular, Flake-powered NixOS configuration featuring Secure Boot (Lanzaboote), CachyOS kernels, Hyprland with caelestia-dots, and 1Password integration.
 
 ## 🛠 Features
 
 * **Flake-Based**: Fully reproducible system and user management via Nix Flakes.
 * **Modular Architecture**: Clean separation of concerns for hardware, boot, gaming, and services.
 * **High Performance**: Powered by the **CachyOS-Bore** kernel for enhanced system responsiveness.
-* **Security & Encryption**: 
+* **Security & Encryption**:
     * **Secure Boot**: Implemented via `lanzaboote` and `sbctl`.
-    * **LUKS**: Full disk encryption using `systemd-initrd`.
+    * **LUKS**: Full disk encryption with TPM2 + PIN sealing via `systemd-cryptenroll`.
     * **1Password**: System-wide integration with SSH agent and Git commit signing.
-* **Desktop Environment**: **KDE Plasma 6** on Wayland with a customized **SilentSDDM** theme.
+* **Desktop Environment**: **Hyprland** on Wayland via UWSM, with [caelestia-dots](https://github.com/caelestia-dots/shell) (Quickshell + Material You) and a customized **SilentSDDM** theme.
+* **NVIDIA**: Open kernel module with Prime offload (AMD iGPU + NVIDIA dGPU), fine-grained power management, and VA-API hardware decode.
 * **Shell Environment**: **Zsh** with Powerlevel10k, syntax highlighting, and modern CLI tools (`eza`, `bat`, `fzf`).
 
 ## 📂 Structure
@@ -26,30 +27,38 @@ A modular, Flake-powered NixOS configuration featuring Secure Boot (Lanzaboote),
 │       └── hardware.nix  # Auto-generated hardware configuration
 ├── modules/              # Reusable system modules
 │   ├── boot.nix          # Bootloader, Plymouth, and Lanzaboote
-│   ├── nvidia.nix        # Nvidia driver and Prime configuration
-│   ├── sddm.nix          # SilentSDDM greeter setup
+│   ├── desktop.nix       # Hyprland, PipeWire, fonts, and Bluetooth
+│   ├── gaming.nix        # Steam, Gamescope, and firewall settings
+│   ├── nix.nix           # Nix settings, binary caches, and GC
+│   ├── nvidia.nix        # NVIDIA driver and Prime offload configuration
 │   ├── obs.nix           # OBS Studio with CUDA support
-│   ├── asus.nix          # ASUS-specific system services
-│   └── gaming.nix        # Steam, Gamescope, and Firewall settings
+│   ├── sddm.nix          # SilentSDDM greeter setup
+│   ├── user.nix          # User account, Home Manager link, and programs
+│   └── asus.nix          # ASUS-specific system services
 └── users/
     └── kjetteren/
-        ├── home.nix      # Home Manager configuration
+        ├── home.nix      # Home Manager entry point
+        ├── hyprland.nix  # Hyprland config, keybinds, and caelestia integration
+        ├── packages.nix  # User packages
         ├── shell.nix     # Zsh configuration and aliases
+        ├── theme.nix     # GTK theme and cursor configuration
         ├── p10k.zsh      # Powerlevel10k theme configuration
         └── icon.png      # User profile picture
 ```
 
 ## 🚀 Installation
+
 **1. Initialize Secure Boot**
+
 Before applying the configuration on a new install, initialize `sbctl`:
 
-```Bash
+```bash
 sudo sbctl create-keys
 ```
 
 **2. Apply Configuration**
 
-```Bash
+```bash
 git clone git@github.com:kjetteren/dotfiles-nixos.git /tmp/dotfiles
 sudo cp -r /tmp/dotfiles/* /etc/nixos/
 cd /etc/nixos
@@ -57,31 +66,37 @@ sudo nixos-rebuild switch --flake .#nixos
 ```
 
 ## 🔑 1Password & SSH Agent
+
 This configuration uses 1Password for SSH authentication and Git signing.
 
 1. Enable **SSH Agent** in 1Password Settings > Developer.
-
 2. Commit signing is handled automatically via the `op-ssh-sign` helper.
-
 3. The SSH agent is mapped to `~/.1password/agent.sock` via Home Manager configuration.
+
+## 🔒 TPM2 + LUKS Sealing
+
+After any rebuild that updates the kernel or boot files, the TPM PIN slot must be resealed or it will reject your PIN on next boot. The activation script will warn you when this is needed.
+
+```bash
+nix-seal
+```
 
 ## 🧹 Maintenance
 
-**Standard Rebuild:**
+**Rebuild:**
 
-```Bash
-sudo nixos-rebuild switch --flake .#nixos
+```bash
+nh os switch /etc/nixos
 ```
 
-**Update System (Update Lockfile):**
+**Update and rebuild:**
 
-```Bash
-nix flake update
-sudo nixos-rebuild switch --flake .#nixos
+```bash
+nix flake update /etc/nixos && nh os switch /etc/nixos
 ```
 
-**Garbage Collection:**
+**Garbage collection:**
 
-```Bash
-sudo nix-collect-garbage -d
+```bash
+nh clean all
 ```

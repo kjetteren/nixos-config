@@ -20,6 +20,11 @@
       la = "eza -a --icons --group-directories-first";
       tree = "eza --tree --icons";
       cat = "bat";
+      upgrade = "nix flake update /etc/nixos && nh os switch /etc/nixos";
     };
   };
+
+  xdg.configFile."xfce4/helpers.rc".text = ''
+    TerminalEmulator=alacritty
+  '';
 }

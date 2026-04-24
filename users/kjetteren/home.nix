@@ -1,44 +1,19 @@
-{ pkgs, inputs, lib, ... }: {
-  imports = [ ./shell.nix inputs.lazyvim.homeManagerModules.default inputs.plasma-manager.homeModules.plasma-manager ];
+{ pkgs, inputs, ... }: {
+  imports = [ 
+    ./hyprland.nix
+    ./packages.nix
+    ./shell.nix
+    ./theme.nix
+    inputs.lazyvim.homeManagerModules.default
+    inputs.caelestia-shell.homeManagerModules.default
+  ];
 
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
 
   home.file.".p10k.zsh".source = ./p10k.zsh;
-  home.packages = with pkgs; [
-    btop
-    wget
-    alacritty
-    sbctl
-    tpm2-tools
-    brave
-    teamspeak6-client
-    telegram-desktop
-    discord
-    mpv
-    git
-    mangohud
-    onlyoffice-desktopeditors
-    libimobiledevice
-    ifuse
-    protonvpn-gui
-    obsidian
-    zsh-powerlevel10k
-    eza
-    bat
-    fzf
-    fastfetch
-    gcc
-    ripgrep
-    fd
-    unzip
-    winboat
-    prismlauncher
-    logmein-hamachi
-    haguichi
-    wl-clipboard
-    papirus-icon-theme
-  ];
+
+  fonts.fontconfig.enable = true;
 
   programs.lazyvim = {
     enable = true;
@@ -46,93 +21,30 @@
       lang.nix.enable = true;
       lang.python = {
         enable = true;
-	installDependencies = true;
-	installRuntimeDependencies = true;
+	      installDependencies = true;
       };
       lang.clangd.enable = true;
       editor.telescope.enable = true;
       editor.harpoon2.enable = true;
     };
   };
-  
-  fonts.fontconfig.enable = true;
 
-  programs.plasma = {
-    enable = true;
+  services.hyprpolkitagent.enable = true;
 
-    session.sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
+  xdg.dataFile."applications/steam.desktop".source = pkgs.runCommand "steam-desktop-patched" {} ''
+    sed -e '/PrefersNonDefaultGPU=true/d' \
+        -e '/X-KDE-RunOnDiscreteGpu=true/d' \
+        ${pkgs.steam}/share/applications/steam.desktop > $out
+  '';
 
-    configFile."kdeglobals"."Icons"."Theme" = "Papirus";
-    configFile."kdeglobals"."KDE" = {
-      AutomaticDarkLightLookAndFeel = true;
-      AutomaticLookAndFeel = true; 
-      DefaultLightLookAndFeel = "org.kde.breeze.desktop";
-      DefaultDarkLookAndFeel = "org.kde.breezedark.desktop";
-    };
-
-    kwin.nightLight = {
-      enable = true;
-      mode = "location";
-      location = {
-        latitude = "50.88";
-        longitude = "4.70";
-      };
-    };
-
-    kscreenlocker = {
-      timeout = 30;
-      passwordRequiredDelay = 30;
-    };
-
-    workspace = {
-      wallpaper = ./wallpapers/Nix;
-      iconTheme = null;
-    };
-
-    panels = [
-      {
-        floating = true;
-        screen = "all";
-        widgets = [
-          {
-            name = "org.kde.plasma.kickoff";
-            config = {
-              General = {
-                icon = "nix-snowflake"; 
-              };
-            };
-          }
-          "org.kde.plasma.pager"
-          {
-            name = "org.kde.plasma.icontasks";
-            config = {
-              General.launchers = [
-                "applications:systemsettings.desktop"
-                "applications:org.kde.dolphin.desktop"
-                "applications:Alacritty.desktop"
-                "applications:brave-browser.desktop"
-                "applications:discord.desktop"
-                "applications:org.telegram.desktop.desktop"
-                "applications:TeamSpeak.desktop"
-              ];
-            };
-          }
-          "org.kde.plasma.marginsseparator"
-          "org.kde.plasma.systemtray"
-          "org.kde.plasma.digitalclock"
-          "org.kde.plasma.showdesktop"
-        ];
-      }
-    ];
-
-    shortcuts = {
-      "services/Alacritty.desktop"."_launch" = "Ctrl+Alt+T";
-      "services/org.kde.konsole.desktop"."_launch"="None";
-    };
+  home.sessionVariables = {
+    AQ_DRM_DEVICES = "/dev/dri/card2:/dev/dri/card1";
+    NVD_BACKEND = "direct";
+    LIBVA_DRIVER_NAME = "nvidia";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    HYPRCURSOR_THEME = "Bibata-Modern-Classic";
+    HYPRCURSOR_SIZE = "24";
   };
-
-  home.file.".local/share/icons/breeze".source = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Light";
-  home.file.".local/share/icons/breeze-dark".source = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark";
 
   programs.ssh = {
     enable = true;

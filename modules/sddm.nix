@@ -1,9 +1,10 @@
-{ inputs, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [ inputs.silentSDDM.nixosModules.default ];
 
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true; 
+    extraPackages = [ pkgs.kdePackages.qtvirtualkeyboard ];
+    settings.General.InputMethod = "qtvirtualkeyboard";
   };
 
   programs.silentSDDM = {
