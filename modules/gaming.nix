@@ -6,6 +6,7 @@
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
   hardware.xone.enable = true;
+  hardware.xpadneo.enable = true;
   networking.firewall = {
     allowedTCPPorts = [ 25565 ];
     allowedUDPPorts = [ 25565 ];
