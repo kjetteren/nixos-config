@@ -31,16 +31,10 @@
 
   services.hyprpolkitagent.enable = true;
 
-  xdg.dataFile."applications/steam.desktop".source = pkgs.runCommand "steam-desktop-patched" {} ''
-    sed -e '/PrefersNonDefaultGPU=true/d' \
-        -e '/X-KDE-RunOnDiscreteGpu=true/d' \
-        ${pkgs.steam}/share/applications/steam.desktop > $out
-  '';
-
   home.sessionVariables = {
     AQ_DRM_DEVICES = "/dev/dri/card2:/dev/dri/card1";
     NVD_BACKEND = "direct";
-    LIBVA_DRIVER_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "radeonsi";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     HYPRCURSOR_THEME = "Bibata-Modern-Classic";
     HYPRCURSOR_SIZE = "24";
