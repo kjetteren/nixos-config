@@ -11,7 +11,7 @@
     };
   };
   
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-x86_64-v3;
   nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
   boot.kernelParams = [ "quiet" "splash" "loglevel=0" "rd.systemd.show_status=false" "rd.udev.log_level=3" "udev.log_priority=3" "i8042.dumbkbd=1" ];
