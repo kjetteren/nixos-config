@@ -32,13 +32,16 @@
     alacritty
     brave
     discord
+    firefox
     obsidian
     onlyoffice-desktopeditors
     pinta
+    protonmail-desktop
     proton-vpn
     qbittorrent
     teamspeak6-client
     telegram-desktop
+    thunderbird
 
     # Gaming
     lutris
