@@ -4,6 +4,7 @@
     systemd.enable = false; # managed by UWSM
     package = null;
     portalPackage = null;
+    configType = "hyprlang";
     settings = {
       "$mod" = "SUPER";
       monitor = [

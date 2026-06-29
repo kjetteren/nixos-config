@@ -43,11 +43,9 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
-        extraOptions = {
-          IdentityAgent = "~/.1password/agent.sock";
-        };
+        IdentityAgent = "~/.1password/agent.sock";
       };
     };
   };
