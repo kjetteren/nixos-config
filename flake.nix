@@ -18,14 +18,9 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/quickshell/quickshell/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.quickshell.follows = "quickshell";
     };
   };
   outputs = inputs@{ self, nixpkgs, ... }: {
