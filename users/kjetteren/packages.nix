@@ -47,6 +47,7 @@
     lutris
     mangohud
     prismlauncher
+    flycast
 
     # iOS
     ifuse
