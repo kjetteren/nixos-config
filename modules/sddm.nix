@@ -9,7 +9,7 @@
 
   programs.silentSDDM = {
     enable = true;
-    theme = "rei";
+    theme = "nord";
     profileIcons = {
       kjetteren = ../users/kjetteren/icon.png;
     };
