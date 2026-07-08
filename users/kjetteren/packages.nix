@@ -54,7 +54,6 @@
     libimobiledevice
 
     # Hyprland utilities
-    cliphist
     grimblast
     hyprpicker
 
