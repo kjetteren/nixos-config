@@ -41,6 +41,23 @@
     HYPRCURSOR_SIZE = "24";
   };
 
+  systemd.user.services.protonvpn-autostart = {
+    Unit = {
+      Description = "ProtonVPN Autostart";
+      After = [ "graphical-session.target" "tray.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+      ExecStart = "${pkgs.uwsm}/bin/uwsm app -- protonvpn-app";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+  };
+
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
