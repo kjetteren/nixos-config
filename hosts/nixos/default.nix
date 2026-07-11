@@ -38,7 +38,6 @@
   # Services
   services.upower.enable = true;
   services.libinput.enable = true;
-  services.flatpak.enable = true;
   services.usbmuxd.enable = true;
   services.logmein-hamachi.enable = true;
 

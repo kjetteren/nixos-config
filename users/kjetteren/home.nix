@@ -1,10 +1,12 @@
 { pkgs, inputs, ... }: {
-  imports = [ 
+  imports = [
+    ./flatpak.nix
     ./hyprland.nix
     ./packages.nix
     ./shell.nix
     ./theme.nix
     inputs.lazyvim.homeManagerModules.default
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.caelestia-shell.homeManagerModules.default
   ];
 
