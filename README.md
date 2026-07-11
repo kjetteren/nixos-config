@@ -37,6 +37,7 @@ A modular, Flake-powered NixOS configuration featuring Secure Boot (Lanzaboote),
 │   └── asus.nix          # ASUS-specific system services
 └── users/
     └── kjetteren/
+        ├── flatpak.nix   # Declarative Flatpak management (nix-flatpak)
         ├── home.nix      # Home Manager entry point
         ├── hyprland.nix  # Hyprland config, keybinds, and caelestia integration
         ├── packages.nix  # User packages
