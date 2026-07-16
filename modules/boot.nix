@@ -20,7 +20,7 @@
   boot.plymouth.enable = true;
 
   boot.initrd.systemd.enable = true;
-  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" "asus_wmi" "asus_nb_wmi" ];
+  boot.initrd.kernelModules = [ "amdgpu" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" "asus_wmi" "asus_nb_wmi" ];
 
   boot.initrd.luks.devices."cryptroot" = {
     device = "/dev/disk/by-uuid/1647454c-0bf6-4453-a438-d82c8cf61d11";
