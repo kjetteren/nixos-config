@@ -5,6 +5,7 @@
     ./packages.nix
     ./shell.nix
     ./theme.nix
+    ./zed.nix
     inputs.lazyvim.homeManagerModules.default
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.caelestia-shell.homeManagerModules.default
@@ -78,5 +79,11 @@
       commit.gpgsign = true;
       user.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLQs6d0wZWg/B+31QFzHEuVTeYIpfbeiWOWHj+JzqDn";
     };
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 }
