@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     # System / security
     brightnessctl
-    nh
     nix-output-monitor
     nvd
     sbctl
