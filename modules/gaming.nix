@@ -12,7 +12,6 @@
     allowedUDPPorts = [ 25565 5520 ];
   };
   programs.haguichi.enable = true;
-  services.tailscale.enable = true;
   programs.ydotool.enable = true;
   environment.systemPackages = with pkgs; [
     (retroarch.withCores (cores: with cores; [
