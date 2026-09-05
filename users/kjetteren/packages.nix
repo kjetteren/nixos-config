@@ -26,6 +26,7 @@
     pavucontrol
     playerctl
     spotify
+    syncplay
 
     # Apps
     alacritty
