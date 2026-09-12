@@ -28,6 +28,7 @@
     };
     powerManagement = {
       enable = true;
+      kernelSuspendNotifier = true;
       finegrained = true;
     };
   };
