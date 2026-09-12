@@ -129,5 +129,63 @@
   programs.caelestia = {
     enable = true;
     cli.enable = true;
+    settings = {
+      appearance.transparency.enabled = false;
+      background = {
+        wallpaperEnabled = true;
+        enabled = true;
+        desktopClock = {
+          enabled = true;
+          background = {
+            enabled = true;
+            blur = true;
+            opacity = 0.7;
+          };
+          shadow = {
+            enabled = true;
+            opacity = 0.7;
+            blur =  0.4;
+          };
+        };
+      };
+      bar = {
+        activeWindow = {
+          compact = false;
+          inverted = false;
+        };
+        clock = {
+          background = false;
+          showDate = false;
+          showSeconds = false;
+        };
+        persistent = true;
+        statusIcons = [
+          { id = "lockStatus"; enabled = true; }
+          { id = "audio"; enabled = true; }
+          { id = "microphone"; enabled = true; }
+          { id = "kbLayout"; enabled = true; }
+          { id = "network"; enabled = true; }
+          { id = "bluetooth"; enabled = true; }
+          { id = "battery"; enabled = true; }
+        ];
+        tray = {
+          background = false;
+          compact = false;
+          recolour = false;
+        };
+      };
+      dashboard.showClockSeconds = true;
+      general.idle = {
+        inhibitWhenAudio = true;
+        lockBeforeSleep = true;
+        timeouts = [
+          { idleAction = "lock"; timeout = 180; }
+          { idleAction = [ "systemctl" "suspend" ]; timeout = 300; }
+        ];
+      };
+      session.commands.logout = [ "bash" "-c" "uwsm stop; sleep 2; pkill -KILL -u $(whoami)" ];
+      notifs.openExpanded = true;
+      services.weatherUnits = "Celsius";
+    };
   };
 }
