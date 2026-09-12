@@ -4,7 +4,6 @@
     withUWSM = true;
     xwayland.enable = true;
   };
-  services.xserver.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   programs.thunar.enable = true;

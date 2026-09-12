@@ -1,5 +1,5 @@
 { pkgs, inputs, config, lib, ... }: {
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
   services.udev.extraRules = ''
     SUBSYSTEM=="drm", KERNEL=="card*", KERNELS=="0000:05:00.0", SYMLINK+="dri/amd-card"

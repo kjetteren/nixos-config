@@ -5,6 +5,7 @@
     enable = true;
     extraPackages = [ pkgs.kdePackages.qtvirtualkeyboard ];
     settings.General.InputMethod = "qtvirtualkeyboard";
+    wayland.enable = true;
   };
 
   programs.silentSDDM = {
