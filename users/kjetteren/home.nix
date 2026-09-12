@@ -36,7 +36,7 @@
   services.cliphist.enable = true;
 
   home.sessionVariables = {
-    AQ_DRM_DEVICES = "/dev/dri/card2:/dev/dri/card1";
+    AQ_DRM_DEVICES = "/dev/dri/amd-card";
     NVD_BACKEND = "direct";
     LIBVA_DRIVER_NAME = "radeonsi";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
