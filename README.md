@@ -14,6 +14,7 @@ A modular, Flake-powered NixOS configuration featuring Secure Boot (Lanzaboote),
 * **Desktop Environment**: **Hyprland** on Wayland via UWSM, with [caelestia-dots](https://github.com/caelestia-dots/shell) (Quickshell + Material You) and a customized **SilentSDDM** theme.
 * **NVIDIA**: Open kernel module with Prime offload (AMD iGPU + NVIDIA dGPU), fine-grained power management, and VA-API hardware decode.
 * **Shell Environment**: **Zsh** with Powerlevel10k, syntax highlighting, and modern CLI tools (`eza`, `bat`, `fzf`).
+* **Development**: **Zed** with `nixd`, `rust-analyzer`, `clangd`, `pyright`, and `taplo`; **LazyVim** via `lazyvim-nix`; `direnv` + `nix-direnv` for per-project shells.
 
 ## 📂 Structure
 
@@ -43,6 +44,7 @@ A modular, Flake-powered NixOS configuration featuring Secure Boot (Lanzaboote),
         ├── packages.nix  # User packages
         ├── shell.nix     # Zsh configuration and aliases
         ├── theme.nix     # GTK theme and cursor configuration
+        ├── zed.nix       # Zed editor settings and language servers
         ├── p10k.zsh      # Powerlevel10k theme configuration
         └── icon.png      # User profile picture
 ```
@@ -60,8 +62,8 @@ sudo sbctl create-keys
 **2. Apply Configuration**
 
 ```bash
-git clone git@github.com:kjetteren/dotfiles-nixos.git /tmp/dotfiles
-sudo cp -r /tmp/dotfiles/* /etc/nixos/
+git clone git@github.com:kjetteren/nixos-config.git /tmp/nixos-config
+sudo cp -r /tmp/nixos-config/* /etc/nixos/
 cd /etc/nixos
 sudo nixos-rebuild switch --flake .#nixos
 ```
@@ -93,7 +95,13 @@ nh os switch /etc/nixos
 **Update and rebuild:**
 
 ```bash
-nix flake update /etc/nixos && nh os switch /etc/nixos
+upgrade
+```
+
+`upgrade` is a Zsh alias defined in `users/kjetteren/shell.nix`, and expands to:
+
+```bash
+nix flake update --flake /etc/nixos && nh os switch /etc/nixos
 ```
 
 **Garbage collection:**
@@ -101,3 +109,5 @@ nix flake update /etc/nixos && nh os switch /etc/nixos
 ```bash
 nh clean all
 ```
+
+`programs.nh.clean` also runs automatically, keeping the last 3 generations and anything from the past 3 days.
