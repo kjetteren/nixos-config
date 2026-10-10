@@ -23,11 +23,18 @@
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    artcraft = {
+      url = "github:Hy4ri/artcraft-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs@{ self, nixpkgs, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
-      modules = [ ./hosts/nixos/default.nix ];
+      modules = [
+        ./hosts/nixos/default.nix
+        { nixpkgs.overlays = [ inputs.artcraft.overlays.default ]; }
+      ];
     };
   };
 }

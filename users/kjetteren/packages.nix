@@ -36,6 +36,7 @@
     obsidian
     onlyoffice-desktopeditors
     pinta
+    printcraft
     protonmail-desktop
     proton-vpn
     qbittorrent
