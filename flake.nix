@@ -27,6 +27,10 @@
       url = "github:Hy4ri/artcraft-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-desktop-nix-flake = {
+      url = "github:poeck/claude-desktop-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs@{ self, nixpkgs, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {

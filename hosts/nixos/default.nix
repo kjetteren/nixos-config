@@ -3,6 +3,7 @@
     ./hardware.nix
     ../../modules/asus.nix
     ../../modules/boot.nix
+    ../../modules/claude.nix
     ../../modules/desktop.nix
     ../../modules/gaming.nix
     ../../modules/nix.nix
