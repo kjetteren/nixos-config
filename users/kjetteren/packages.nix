@@ -26,6 +26,7 @@
     pavucontrol
     playerctl
     spotify
+    spotifast
     syncplay
 
     # Apps
