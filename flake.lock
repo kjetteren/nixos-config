@@ -102,6 +102,26 @@
         "type": "github"
       }
     },
+    "epic-games-launcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792055615,
+        "narHash": "sha256-TYpaEDQKyA5G776UhCYx3lHMT1G8nr+nf9lgLCN3t20=",
+        "owner": "kjetteren",
+        "repo": "epic-games-launcher-flake",
+        "rev": "24b79c126bbae43476f4cfa2b94ed4cb39bccd89",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kjetteren",
+        "repo": "epic-games-launcher-flake",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -389,6 +409,7 @@
         "artcraft": "artcraft",
         "caelestia-shell": "caelestia-shell",
         "claude-desktop-nix-flake": "claude-desktop-nix-flake",
+        "epic-games-launcher": "epic-games-launcher",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "lazyvim": "lazyvim",

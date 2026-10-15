@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
+  imports = [ inputs.epic-games-launcher.nixosModules.default ];
+  programs.epic-games-launcher.enable = true;
   programs.steam = {
     enable = true;
     protontricks.enable = true;
