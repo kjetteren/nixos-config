@@ -55,7 +55,7 @@
     };
     Service = {
       ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
-      ExecStart = "${pkgs.uwsm}/bin/uwsm app -- protonvpn-app";
+      ExecStart = "${pkgs.proton-vpn}/bin/protonvpn-app";
       Restart = "on-failure";
       RestartSec = 2;
     };
