@@ -10,7 +10,6 @@
     enable32Bit = true;
     extraPackages = with pkgs; [
       nvidia-vaapi-driver
-      libvdpau-va-gl
     ];
     extraPackages32 = with pkgs.pkgsi686Linux; [
       nvidia-vaapi-driver
