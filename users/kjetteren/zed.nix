@@ -33,10 +33,9 @@
             path_lookup = true;
           };
         };
-        nix = {
-          binary = {
-            path_lookup = true;
-          };
+        nixd = {
+          binary.path_lookup = true;
+          settings.formatting.command = [ "nixfmt" ];
         };
       };
       languages = {
@@ -53,7 +52,7 @@
           format_on_save = "on";
         };
         "Nix" = {
-          language_servers = [ "nix" ];
+          language_servers = [ "nixd" ];
           format_on_save = "on";
         };
         "TOML" = {
