@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.zed-editor = {
     enable = true;
     extensions = [ "nix" "toml" ];
@@ -7,7 +7,10 @@
       taplo
       clang-tools
       pyright
+      nixfmt
       nixd
+      nodejs
+      package-version-server
     ];
     userSettings = {
       theme = {
@@ -17,6 +20,12 @@
       };
       hour_format = "hour24";
       load_direnv = "shell_hook";
+      agent_servers."Claude Code" = {
+        type = "custom";
+        command = lib.getExe pkgs.claude-agent-acp;
+        args = [ ];
+        env = { };
+      };
       lsp = {
         rust-analyzer = {
           binary = {
@@ -36,6 +45,9 @@
         nixd = {
           binary.path_lookup = true;
           settings.formatting.command = [ "nixfmt" ];
+        };
+        package-version-server = {
+          binary.path = lib.getExe pkgs.package-version-server;
         };
       };
       languages = {
