@@ -1,4 +1,4 @@
-{ pkgs, ...}: {
+{ pkgs, osConfig, ... }: {
   home.packages = with pkgs; [
     # System / security
     brightnessctl
@@ -64,17 +64,38 @@
     papirus-icon-theme
 
     # TPM sync check
-    (writeShellScriptBin "nix-seal" ''
-      echo "Removing old/broken TPM slots..."
-      sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p2
+    (writeShellApplication {
+      name = "nix-seal";
+      runtimeInputs = [ tpm2-tools ];
+      text = ''
+        dev=${osConfig.boot.initrd.luks.devices.cryptroot.device}
+        pcrs=0+2+7+12
 
-      echo "Sealing LUKS to new system state (PCR 0+2+7+12) with PIN..."
-      sudo systemd-cryptenroll --tpm2-device=auto \
-        --tpm2-pcrs=0+2+7+12 \
-        --tpm2-with-pin=yes \
-        /dev/nvme0n1p2
+        if ! tpm_state=$(sudo tpm2_getcap -T device:/dev/tpmrm0 properties-variable); then
+          echo "Could not query the TPM. Nothing was changed." >&2
+          exit 1
+        fi
+        if grep -Eq '^[[:space:]]*inLockout:[[:space:]]*1' <<<"$tpm_state"; then
+          echo "TPM is in dictionary-attack lockout. Nothing was changed." >&2
+          grep -E 'lockoutAuthSet|TPM2_PT_(LOCKOUT_COUNTER|MAX_AUTH_FAIL|LOCKOUT_INTERVAL)' <<<"$tpm_state" >&2 || true
+          echo "Clear it with: sudo tpm2_dictionarylockout -T device:/dev/tpmrm0 --clear-lockout" >&2
+          exit 1
+        fi
 
-      echo "Sync complete! Your PIN will work on the next boot."
-    '')
+        echo "Sealing LUKS to current system state (PCR $pcrs) with PIN..."
+        if ! sudo systemd-cryptenroll \
+          --tpm2-device=auto \
+          --tpm2-pcrs="$pcrs" \
+          --tpm2-with-pin=yes \
+          --wipe-slot=tpm2 \
+          "$dev"; then
+          echo "Enrollment failed. No key slots were wiped." >&2
+          exit 1
+        fi
+
+        sudo systemd-cryptenroll "$dev"
+        echo "Sync complete! Your PIN will work on the next boot."
+      '';
+    })
   ];
 }
