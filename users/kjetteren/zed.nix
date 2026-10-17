@@ -1,7 +1,10 @@
 { pkgs, lib, ... }: {
   programs.zed-editor = {
     enable = true;
-    extensions = [ "nix" "toml" ];
+    extensions = [
+      "nix"
+      "toml"
+    ];
     extraPackages = with pkgs; [
       rust-analyzer
       taplo

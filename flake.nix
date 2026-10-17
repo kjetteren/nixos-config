@@ -36,13 +36,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ self, nixpkgs, ... }: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/nixos/default.nix
-        { nixpkgs.overlays = [ inputs.artcraft.overlays.default ]; }
-      ];
+  outputs =
+    inputs@{ self, nixpkgs, ... }:
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/nixos/default.nix
+          { nixpkgs.overlays = [ inputs.artcraft.overlays.default ]; }
+        ];
+      };
     };
-  };
 }

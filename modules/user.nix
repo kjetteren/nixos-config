@@ -2,7 +2,11 @@
   # User & Security
   users.users.kjetteren = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "i2c" "ydotool" ];
+    extraGroups = [
+      "wheel"
+      "i2c"
+      "ydotool"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -16,7 +20,7 @@
            action.id == "org.freedesktop.NetworkManager.network-control") &&
           subject.isInGroup("wheel")) {
         return polkit.Result.YES;
-      } 
+      }
     });
   '';
   services.gnome.gnome-keyring.enable = true;

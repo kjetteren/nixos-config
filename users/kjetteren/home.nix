@@ -25,7 +25,7 @@
       lang.nix.enable = true;
       lang.python = {
         enable = true;
-	      installDependencies = true;
+        installDependencies = true;
       };
       lang.clangd.enable = true;
       editor.telescope.enable = true;
@@ -48,7 +48,10 @@
   systemd.user.services.protonvpn-autostart = {
     Unit = {
       Description = "ProtonVPN Autostart";
-      After = [ "graphical-session.target" "tray.target" ];
+      After = [
+        "graphical-session.target"
+        "tray.target"
+      ];
       PartOf = [ "graphical-session.target" ];
     };
     Install = {
