@@ -5,6 +5,7 @@
     ./packages.nix
     ./shell.nix
     ./theme.nix
+    ./thunar.nix
     ./zed.nix
     inputs.lazyvim.homeManagerModules.default
     inputs.nix-flatpak.homeManagerModules.nix-flatpak

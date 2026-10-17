@@ -6,7 +6,16 @@
   };
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  programs.thunar.enable = true;
+
+  # File manager
+  programs.thunar = {
+    enable = true;
+    plugins = [ pkgs.thunar-archive-plugin ];
+  };
+  environment.systemPackages = [ pkgs.file-roller ];
+  services.tumbler.enable = true;
+  services.gvfs.enable = true;
+
   services.pipewire = {
     enable = true;
     pulse.enable = true;
