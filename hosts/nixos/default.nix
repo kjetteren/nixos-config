@@ -40,7 +40,6 @@
   services.upower.enable = true;
   services.libinput.enable = true;
   services.usbmuxd.enable = true;
-  services.logmein-hamachi.enable = true;
   services.flatpak.enable = true;
 
   system.stateVersion = "25.11";
