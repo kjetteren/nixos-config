@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ config, ... }: {
   services.xserver.videoDrivers = [
     "amdgpu"
     "nvidia"
@@ -11,12 +11,6 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [
-      nvidia-vaapi-driver
-    ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [
-      nvidia-vaapi-driver
-    ];
   };
 
   hardware.nvidia = {
@@ -30,7 +24,6 @@
     };
     powerManagement = {
       enable = true;
-      kernelSuspendNotifier = true;
       finegrained = true;
     };
   };
