@@ -1,0 +1,169 @@
+/* Clipboard picker theme, laid out like caelestia's launcher and set in the
+ * shell's own fonts (Google Sans Flex with its slightly rounded ends, and
+ * Material Symbols). picker.py overrides the colours below with the current
+ * caelestia scheme. */
+
+* {
+    surface:                   #0a0f0f;
+    surface-container:         #131b1a;
+    surface-container-high:    #192120;
+    surface-container-highest: #1d2827;
+    on-surface:                #dce8e6;
+    on-surface-variant:        #a2adac;
+    outline:                   #6d7876;
+    outline-variant:           #3f4a49;
+    primary:                   #9bd0cc;
+    selected:                  #dce8e61a;
+
+    font:             "Google Sans Flex 11 @ROND=25,opsz=11";
+    background-color: transparent;
+    text-color:       @on-surface;
+}
+
+window {
+    width:            600px;
+    padding:          16px;
+    border-radius:    28px;
+    background-color: @surface;
+}
+
+mainbox {
+    spacing:  12px;
+    children: [ inputbar, listview, footer ];
+}
+
+inputbar {
+    padding:          9px 16px;
+    spacing:          10px;
+    border-radius:    100px;
+    background-color: @surface-container;
+    children:         [ textbox-search-icon, entry, num-filtered-rows, textbox-count-separator, num-rows ];
+}
+
+textbox-search-icon {
+    content:        "search";
+    font:           "Material Symbols Rounded 14";
+    text-color:     @on-surface-variant;
+    expand:         false;
+    vertical-align: 0.5;
+}
+
+entry {
+    placeholder:       "Search…";
+    placeholder-color: @on-surface-variant;
+    cursor:            text;
+    vertical-align:    0.5;
+}
+
+num-filtered-rows, textbox-count-separator, num-rows {
+    text-color:     @outline;
+    expand:         false;
+    vertical-align: 0.5;
+}
+
+textbox-count-separator {
+    content: "/";
+}
+
+listview {
+    lines:        9;
+    fixed-height: true;
+    spacing:      2px;
+    scrollbar:    false;
+}
+
+element {
+    padding:       7px 12px;
+    spacing:       12px;
+    border-radius: 16px;
+}
+
+element selected.normal {
+    background-color: @selected;
+}
+
+element-icon {
+    size:           28px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color:     inherit;
+    highlight:      bold;
+    vertical-align: 0.5;
+}
+
+/* Key hints: outlined key caps; each hint is also clickable. */
+footer {
+    orientation: horizontal;
+    expand:      false;
+    spacing:     6px;
+    padding:     2px 4px 0;
+    children:    [ button-copy-key, button-copy, button-delete-key, button-delete,
+                   button-clear-key, button-clear, footer-fill, button-close-key, button-close ];
+}
+
+footer-fill {
+    expand: true;
+}
+
+button-copy-key, button-delete-key, button-clear-key, button-close-key {
+    padding:        1px 7px;
+    border:         1px;
+    border-radius:  6px;
+    border-color:   @outline;
+    font:           "Google Sans Flex SemiBold 8.5 @ROND=25,opsz=8.5";
+    text-color:     @on-surface-variant;
+    expand:         false;
+    vertical-align: 0.5;
+}
+
+button-copy, button-delete, button-clear, button-close {
+    font:           "Google Sans Flex 9 @ROND=25,opsz=9";
+    text-color:     @on-surface-variant;
+    padding:        0 8px 0 0;
+    expand:         false;
+    vertical-align: 0.5;
+}
+
+button-copy-key {
+    content: "Enter";
+    action:  "kb-accept-entry";
+}
+button-copy {
+    content: "Copy";
+    action:  "kb-accept-entry";
+}
+button-delete-key {
+    content: "Shift + Del";
+    action:  "kb-custom-1";
+}
+button-delete {
+    content: "Delete";
+    action:  "kb-custom-1";
+}
+button-clear-key {
+    content: "Ctrl + Shift + Del";
+    action:  "kb-custom-2";
+}
+button-clear {
+    content: "Clear all";
+    action:  "kb-custom-2";
+}
+button-close-key {
+    content: "Esc";
+    action:  "kb-cancel";
+}
+button-close {
+    content: "Close";
+    action:  "kb-cancel";
+}
+
+/* "Clear all?" confirmation: the -mesg line above two choices */
+message {
+    padding: 2px 8px 0;
+}
+
+textbox {
+    text-color: @on-surface;
+}

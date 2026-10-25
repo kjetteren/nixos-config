@@ -1,5 +1,6 @@
 { pkgs, inputs, ... }: {
   imports = [
+    ./clipboard
     ./flatpak.nix
     ./hyprland.nix
     ./packages.nix
@@ -34,7 +35,6 @@
   };
 
   services.hyprpolkitagent.enable = true;
-  services.cliphist.enable = true;
 
   home.sessionVariables = {
     AQ_DRM_DEVICES = "/dev/dri/amd-card";

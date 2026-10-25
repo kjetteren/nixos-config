@@ -106,12 +106,6 @@
         }
         {
           _args = [
-            (lib.generators.mkLuaInline ''mod .. " + V"'')
-            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("cliphist list | wofi --dmenu --pre-display-cmd \"echo '%s' | cut -f 2\" | cliphist decode | wl-copy")'')
-          ];
-        }
-        {
-          _args = [
             (lib.generators.mkLuaInline ''mod .. " + Q"'')
             (lib.generators.mkLuaInline "hl.dsp.window.close()")
           ];
@@ -283,8 +277,6 @@
       ));
     };
   };
-
-  programs.wofi.enable = true;
 
   programs.caelestia = {
     enable = true;
