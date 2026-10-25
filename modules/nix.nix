@@ -10,12 +10,12 @@
       "flakes"
     ];
     substituters = [
-      "https://attic.xuyh0120.win/lantian"
+      "https://cache.lantian.pub/lantian"
       "https://cache.nixos.org"
       "https://cache.nixos-cuda.org"
     ];
     trusted-public-keys = [
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
     ];
