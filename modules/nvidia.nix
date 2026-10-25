@@ -26,5 +26,6 @@
       enable = true;
       finegrained = true;
     };
+    dynamicBoost.enable = true;
   };
 }
