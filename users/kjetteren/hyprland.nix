@@ -278,6 +278,11 @@
     };
   };
 
+  systemd.user.services.caelestia.Service = {
+    KillMode = "process";
+    RestartSec = lib.mkForce "2s";
+  };
+
   programs.caelestia = {
     enable = true;
     cli.enable = true;

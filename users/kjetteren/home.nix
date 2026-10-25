@@ -65,6 +65,48 @@
     };
   };
 
+  systemd.user.services.tray-reregister = {
+    Unit = {
+      Description = "Re-register tray icons when the tray restarts";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${
+        pkgs.writeShellApplication {
+          name = "tray-reregister";
+          runtimeInputs = [
+            pkgs.systemd
+            pkgs.glib
+            pkgs.gawk
+          ];
+          text = ''
+            reregister() {
+              busctl --user list --acquired --no-legend \
+                | awk '$1 ~ /^org\.(kde|freedesktop)\.StatusNotifierItem-/ { print $1 }' \
+                | while read -r item; do
+                    busctl --user call org.kde.StatusNotifierWatcher /StatusNotifierWatcher \
+                      org.kde.StatusNotifierWatcher RegisterStatusNotifierItem s "$item" || true
+                  done
+            }
+
+            gdbus monitor --session --dest org.freedesktop.DBus --object-path /org/freedesktop/DBus \
+              | while read -r line; do
+                  case "$line" in
+                    *"NameOwnerChanged ('org.kde.StatusNotifierWatcher', "*"', ':"*) reregister ;;
+                  esac
+                done
+          '';
+        }
+      }/bin/tray-reregister";
+      Restart = "always";
+      RestartSec = "2s";
+    };
+  };
+
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
