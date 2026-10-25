@@ -30,10 +30,8 @@
     "i8042.dumbkbd=1"
   ];
   boot.consoleLogLevel = 0;
-  boot.initrd.verbose = false;
   boot.plymouth.enable = true;
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.kernelModules = [
     "amdgpu"
     "asus_wmi"
