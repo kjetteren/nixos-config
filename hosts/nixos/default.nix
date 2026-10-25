@@ -11,6 +11,7 @@
     ../../modules/obs.nix
     ../../modules/sddm.nix
     ../../modules/user.nix
+    ../../modules/waydroid.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 

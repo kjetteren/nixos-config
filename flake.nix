@@ -35,6 +35,10 @@
       url = "github:kjetteren/epic-games-launcher-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    waydroid-script = {
+      url = "github:casualsnek/waydroid_script";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs@{ self, nixpkgs, ... }:

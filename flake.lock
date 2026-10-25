@@ -416,7 +416,8 @@
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
-        "silentSDDM": "silentSDDM"
+        "silentSDDM": "silentSDDM",
+        "waydroid-script": "waydroid-script"
       }
     },
     "rust-overlay": {
@@ -472,6 +473,42 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "waydroid-script": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1789131396,
+        "narHash": "sha256-UBbnYhiRCf4sMwpEDMlpJuTEsN66B2hZ8BPz6cCGXAc=",
+        "owner": "casualsnek",
+        "repo": "waydroid_script",
+        "rev": "48dbfaf34a6ddbe78688c530f9ba1c26522aafb2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "casualsnek",
+        "repo": "waydroid_script",
         "type": "github"
       }
     }
