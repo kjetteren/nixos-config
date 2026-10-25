@@ -15,6 +15,7 @@
   environment.systemPackages = [ pkgs.file-roller ];
   services.tumbler.enable = true;
   services.gvfs.enable = true;
+  programs.gphoto2.enable = true;
 
   services.pipewire = {
     enable = true;
