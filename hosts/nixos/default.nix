@@ -12,6 +12,7 @@
     ../../modules/sddm.nix
     ../../modules/user.nix
     ../../modules/waydroid.nix
+    ../../modules/waydroid-keymapper.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 

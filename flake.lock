@@ -67,6 +67,25 @@
         "type": "github"
       }
     },
+    "cage-waydroid": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763547233,
+        "narHash": "sha256-f4TrgQVb7of/3fw0/k4eDg57Ga3mDPHSX///Np7UqDY=",
+        "ref": "waydroid-helper",
+        "rev": "52797b1f95d8e912ab4b799b63d6b8bb5ca4f143",
+        "revCount": 379,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/waydroid-helper/cage"
+      },
+      "original": {
+        "ref": "waydroid-helper",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/waydroid-helper/cage"
+      }
+    },
     "claude-desktop-nix-flake": {
       "inputs": {
         "nixpkgs": [
@@ -408,6 +427,7 @@
       "inputs": {
         "artcraft": "artcraft",
         "caelestia-shell": "caelestia-shell",
+        "cage-waydroid": "cage-waydroid",
         "claude-desktop-nix-flake": "claude-desktop-nix-flake",
         "epic-games-launcher": "epic-games-launcher",
         "home-manager": "home-manager",

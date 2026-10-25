@@ -39,6 +39,10 @@
       url = "github:casualsnek/waydroid_script";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cage-waydroid = {
+      url = "git+https://github.com/waydroid-helper/cage?ref=waydroid-helper&submodules=1";
+      flake = false;
+    };
   };
   outputs =
     inputs@{ self, nixpkgs, ... }:
