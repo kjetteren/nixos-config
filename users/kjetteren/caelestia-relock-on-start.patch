@@ -1,0 +1,87 @@
+diff --git a/shell.qml b/shell.qml
+index 60cb877..de6f29b 100644
+--- a/shell.qml
++++ b/shell.qml
+@@ -6,6 +6,7 @@
+ 
+ import QtQuick
+ import Quickshell
++import Quickshell.Io
+ import Caelestia.Config
+ import qs.services
+ import qs.modules.areapicker
+@@ -17,6 +18,12 @@ import qs.daemons
+ ShellRoot {
+     id: root
+ 
++    // The wallpaper, bar and border windows are only created once we know the
++    // session isn't locked, or once the lock screen is up. After a crash
++    // Quickshell relaunches the shell behind the still-locked session, and
++    // windows that can't be drawn there would hold up the lock screen.
++    property bool desktopReady: false
++
+     settings.watchFiles: true
+ 
+     Component.onCompleted: {
+@@ -41,13 +48,59 @@ ShellRoot {
+     }
+ 
+     // Modules
+-    Background {}
+-    Drawers {}
++    LazyLoader {
++        active: root.desktopReady
++
++        Background {}
++    }
++
++    LazyLoader {
++        active: root.desktopReady
++
++        Drawers {}
++    }
++
+     AreaPicker {}
+     Lock {
+         id: lock
+     }
+ 
++    // Take the lock back if Hyprland still holds it (the shell crashed while
++    // locked). Needs misc:allow_session_lock_restore.
++    Process {
++        running: true
++        command: ["hyprctl", "locked"]
++        stdout: StdioCollector {
++            onStreamFinished: {
++                if (text.trim() === "true")
++                    lock.lock.locked = true;
++                else
++                    root.desktopReady = true;
++            }
++        }
++    }
++
++    Connections {
++        function onSecureStateChanged(): void {
++            if (lock.lock.secure)
++                root.desktopReady = true;
++        }
++
++        function onLockStateChanged(): void {
++            if (!lock.lock.locked)
++                root.desktopReady = true;
++        }
++
++        target: lock.lock
++    }
++
++    // Never leave the desktop without its windows if the checks above fail
++    Timer {
++        running: !root.desktopReady
++        interval: 3000
++        onTriggered: root.desktopReady = true
++    }
++
+     // Daemons
+     Shortcuts {}
+     BatteryMonitor {}

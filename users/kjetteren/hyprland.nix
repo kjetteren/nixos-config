@@ -1,4 +1,10 @@
-{ lib, ... }: {
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
+{
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false; # managed by UWSM
@@ -285,6 +291,11 @@
 
   programs.caelestia = {
     enable = true;
+    package =
+      inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs
+        (old: {
+          patches = (old.patches or [ ]) ++ [ ./caelestia-relock-on-start.patch ];
+        });
     cli.enable = true;
     settings = {
       appearance.transparency.enabled = false;
