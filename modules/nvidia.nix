@@ -15,7 +15,18 @@
 
   hardware.nvidia = {
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package =
+      let
+        driver = config.boot.kernelPackages.nvidiaPackages.latest;
+      in
+      driver
+      // {
+        open = driver.open.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [
+            ./patches/nvidia-rtd3-7.3.patch
+          ];
+        });
+      };
     prime = {
       offload.enable = true;
       offload.enableOffloadCmd = true;
