@@ -31,7 +31,9 @@
 
     # Apps
     alacritty
+    antigravity-hub
     brave
+    chatgpt
     discord
     firefox
     obsidian
@@ -44,6 +46,7 @@
     teamspeak6-client
     telegram-desktop
     thunderbird
+    ticktick
 
     # Gaming
     lutris
