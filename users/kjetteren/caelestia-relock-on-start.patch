@@ -1,16 +1,17 @@
 diff --git a/shell.qml b/shell.qml
-index 60cb877..de6f29b 100644
+index 60cb877..ce4c932 100644
 --- a/shell.qml
 +++ b/shell.qml
-@@ -6,6 +6,7 @@
+@@ -6,6 +6,8 @@
  
  import QtQuick
  import Quickshell
 +import Quickshell.Io
++import Quickshell.Hyprland
  import Caelestia.Config
  import qs.services
  import qs.modules.areapicker
-@@ -17,6 +18,12 @@ import qs.daemons
+@@ -17,6 +19,16 @@ import qs.daemons
  ShellRoot {
      id: root
  
@@ -20,10 +21,14 @@ index 60cb877..de6f29b 100644
 +    // windows that can't be drawn there would hold up the lock screen.
 +    property bool desktopReady: false
 +
++    // Cursor position saved when the session locks, restored on unlock
++    property point savedCursor
++    property bool hasSavedCursor: false
++
      settings.watchFiles: true
  
      Component.onCompleted: {
-@@ -41,13 +48,59 @@ ShellRoot {
+@@ -41,13 +53,110 @@ ShellRoot {
      }
  
      // Modules
@@ -68,11 +73,62 @@ index 60cb877..de6f29b 100644
 +        }
 +
 +        function onLockStateChanged(): void {
-+            if (!lock.lock.locked)
++            if (lock.lock.locked) {
++                root.hasSavedCursor = false;
++                saveCursor.running = true;
++            } else {
 +                root.desktopReady = true;
++                if (root.hasSavedCursor)
++                    restoreCursor.running = true;
++            }
 +        }
 +
 +        target: lock.lock
++    }
++
++    // Hyprland warps the cursor when HDMI-A-1 drops out at resume, so put it
++    // back where it was when the session locked.
++    Process {
++        id: saveCursor
++
++        command: ["hyprctl", "cursorpos"]
++        stdout: StdioCollector {
++            onStreamFinished: {
++                const m = text.match(/(-?\d+),\s*(-?\d+)/);
++                if (m) {
++                    root.savedCursor = Qt.point(parseInt(m[1]), parseInt(m[2]));
++                    root.hasSavedCursor = true;
++                }
++            }
++        }
++    }
++
++    Process {
++        id: restoreCursor
++
++        command: ["hyprctl", "dispatch", `hl.dsp.cursor.move({ x = ${root.savedCursor.x}, y = ${root.savedCursor.y} })`]
++    }
++
++    // The warp happens while the lock screen is up, so also restore whenever a
++    // monitor comes or goes while locked. Debounced so it runs after Hyprland
++    // has finished moving the cursor itself.
++    Timer {
++        id: restoreCursorLater
++
++        interval: 150
++        onTriggered: {
++            if (lock.lock.locked && root.hasSavedCursor)
++                restoreCursor.running = true;
++        }
++    }
++
++    Connections {
++        function onRawEvent(event: HyprlandEvent): void {
++            if (event.name === "monitorremoved" || event.name === "monitoradded")
++                restoreCursorLater.restart();
++        }
++
++        target: Hyprland
 +    }
 +
 +    // Never leave the desktop without its windows if the checks above fail
