@@ -1,0 +1,36 @@
+diff --git a/daemons/IdleInhibit.qml b/daemons/IdleInhibit.qml
+index 6abbfc8..910d378 100644
+--- a/daemons/IdleInhibit.qml
++++ b/daemons/IdleInhibit.qml
+@@ -23,6 +23,9 @@ Scope {
+             implicitHeight: 0
+             color: "transparent"
+             mask: Region {}
++            // Hyprland ignores inhibitors on surfaces with zero alpha, and fades top-layer
++            // surfaces to zero alpha while a fullscreen window is on their monitor
++            WlrLayershell.layer: WlrLayer.Background
+         }
+     }
+ 
+diff --git a/daemons/IdleMonitors.qml b/daemons/IdleMonitors.qml
+index 9422edd..e888c81 100644
+--- a/daemons/IdleMonitors.qml
++++ b/daemons/IdleMonitors.qml
+@@ -6,6 +6,7 @@ import Quickshell.Wayland
+ import Quickshell.Services.UPower
+ import Caelestia.Config
+ import Caelestia.Services
++import Caelestia.State
+ import qs.services
+ import qs.modules.lock
+ 
+@@ -63,6 +64,9 @@ Scope {
+             enabled: {
+                 if (!root.enabled || !(modelData.enabled ?? true))
+                     return false;
++                // Keep awake, without relying on the compositor counting the inhibitor
++                if (RuntimeState.inhibitIdle && (modelData.respectInhibitors ?? true))
++                    return false;
+                 if (modelData.inhibitWhenAudio && root.hasPlayer)
+                     return false;
+                 if (modelData.inhibitWhenCharging && root.isCharging)
