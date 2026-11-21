@@ -23,11 +23,25 @@
       };
       hour_format = "hour24";
       load_direnv = "shell_hook";
-      agent_servers."Claude Code" = {
-        type = "custom";
-        command = lib.getExe pkgs.claude-agent-acp;
-        args = [ ];
-        env = { };
+      agent_servers = {
+        "Claude Code" = {
+          type = "custom";
+          command = lib.getExe pkgs.claude-agent-acp;
+          args = [ ];
+          env = { };
+        };
+        "Codex" = {
+          type = "custom";
+          command = lib.getExe pkgs.codex-acp;
+          args = [ ];
+          env = { };
+        };
+        "Antigravity" = {
+          type = "custom";
+          command = lib.getExe pkgs.antigravity-acp;
+          args = [ "--uid=" ];
+          env = { };
+        };
       };
       lsp = {
         rust-analyzer = {
