@@ -51,7 +51,9 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "quickshell": "quickshell"
+        "quickshell": [
+          "quickshell"
+        ]
       },
       "locked": {
         "lastModified": 1793272697,
@@ -405,22 +407,22 @@
     "quickshell": {
       "inputs": {
         "nixpkgs": [
-          "caelestia-shell",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1792651682,
-        "narHash": "sha256-TiCGqLMpNIy7FERewgfKVluPsLVF96uc6x6xwZnMjdQ=",
-        "ref": "refs/heads/master",
-        "rev": "9b0f339b19057f4731bf3b48293307d7ef241671",
-        "revCount": 879,
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+        "lastModified": 1793836740,
+        "narHash": "sha256-+TxSd33sPBeQwZqf4hCHlG2xcmJG3raBfDCKv+Hbgyg=",
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "rev": "118126113205d40c5bdb36d061c9300feb17a415",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "rev": "118126113205d40c5bdb36d061c9300feb17a415",
+        "type": "github"
       }
     },
     "root": {
@@ -436,6 +438,7 @@
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
+        "quickshell": "quickshell",
         "silentSDDM": "silentSDDM",
         "waydroid-script": "waydroid-script"
       }

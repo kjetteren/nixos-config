@@ -19,9 +19,16 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # quickshell 9b0f339 + PR #1442 (release stray window refs before deleting a window),
+    # fixes the crash on wake. Remove once the fix is in quickshell master and caelestia's pin.
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell/118126113205d40c5bdb36d061c9300feb17a415";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quickshell.follows = "quickshell";
     };
     artcraft = {
       url = "github:Hy4ri/artcraft-flake";
