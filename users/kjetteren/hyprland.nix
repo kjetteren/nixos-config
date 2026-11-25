@@ -296,7 +296,6 @@
         (old: {
           patches = (old.patches or [ ]) ++ [
             ./caelestia-relock-on-start.patch
-            ./caelestia-keep-awake.patch
           ];
         });
     cli.enable = true;
